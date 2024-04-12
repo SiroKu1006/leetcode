@@ -1,13 +1,20 @@
 class Solution:
     def trap(self, height: list[int]) -> int:
         ans = 0
-        n = 0
-        high = 0
-        low = 0
         left = 0
-        right = 1
-        while right < len(height)-1:
-            
+        right = len(height)-1
+        old_high = 0
+        while left < right:
+            if old_high < min(height[left],height[right]):
+                new_high = min(height[left],height[right])
+                ans += (new_high-old_high)*(right-left)
+                old_high = new_high
+            if height[left] <= height[right]:
+                left += 1
+                ans -= min(height[left],old_high)
+            else:
+                right -= 1
+                ans -= min(height[right],old_high)
         return ans
 
 
